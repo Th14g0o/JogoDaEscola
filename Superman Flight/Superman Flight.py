@@ -23,6 +23,7 @@ def jogo():
     posi_y_c = 250
     posi_y = 290
     posi_y_sele = 290
+    posi_y_sele_tutor = 390
 
     som_kabum = pygame.mixer.Sound('kabum.mp3')
     som_kabum.set_volume(1)
@@ -168,6 +169,8 @@ def jogo():
 
     gameover = False
 
+    tutor = False
+
     score = 0
 
     relogio = pygame.time.Clock()
@@ -225,18 +228,6 @@ def jogo():
             pygame.display.flip()
             relogio.tick(30)
 
-        theme.play()
-
-        texto("Superman Flight", verm, 50, 0, 9)
-        texto("Superman Flight", amare, 50, 3,9)
-
-        selecao(branco, posi_y)
-        pygame.draw.rect(tela, azul, [173, 300, 250, 40])
-        texto("INICIAR", amare, 40, 240, 305)
-        pygame.draw.rect(tela, azul, [173, 350, 250, 40])
-        texto("SAIR", amare, 40, 260, 355)
-                        
-        pygame.display.flip()
 
         while gameover:
             theme.play()
@@ -309,6 +300,46 @@ def jogo():
 
             pygame.display.flip()
 
+        while tutor:
+
+            tela.fill(branco)
+
+            selecao(preto, posi_y_sele_tutor)
+            pygame.draw.rect(tela, azul, [173, 400, 250, 40])
+            texto("VOLTAR", amare, 40, 240, 405)
+
+            texto("Seta para cima move o personagem para cima", preto, 30, 80, 100)
+            texto("Seta para baixo move o personagem para baixo", preto, 30, 75, 150)
+            texto("Se o Superman tocar em um dos drones perdera uma vida", preto, 30, 14, 200)
+            texto("(Total 3)", preto, 30, 250, 230)
+            texto("A velocidade dos drones varia, tome cuidado!", preto, 30, 75, 280)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    tutor = False
+                    rodando = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        tutor = False
+
+            pygame.display.flip()
+
+        theme.play()
+
+        texto("Superman Flight", verm, 50, 0, 9)
+        texto("Superman Flight", amare, 50, 3, 9)
+
+        selecao(branco, posi_y)
+        pygame.draw.rect(tela, azul, [173, 300, 250, 40])
+        texto("INICIAR", amare, 40, 240, 305)
+        pygame.draw.rect(tela, azul, [173, 350, 250, 40])
+        texto("TUTORIAL", amare, 40, 234, 355)
+        pygame.draw.rect(tela, azul, [173, 400, 250, 40])
+        texto("SAIR", amare, 40, 260, 405)
+
+        pygame.display.flip()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 rodando = False
@@ -318,8 +349,8 @@ def jogo():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     posi_y += (50)
-                if posi_y >= 340:
-                    posi_y = 340
+                if posi_y >= 390:
+                    posi_y = 390
                 if event.key == pygame.K_UP:
                     posi_y -= (50)
                 if posi_y <=  290:
@@ -334,6 +365,9 @@ def jogo():
                         funcionando = True
                                         
                     if posi_y == 340:
+                        tutor = True
+
+                    if posi_y == 390:
                         rodando = False
     
 jogo()
